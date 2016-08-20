@@ -4,7 +4,7 @@ THREE.ViveController = function( id ){
 
 	THREE.Object3D.call( this )
 	this.matrixAutoUpdate = false
-	this.standingMatrix = new THREE.Matrix4()
+	this.standingMatrix   = new THREE.Matrix4()
 
 
 	//  Button value storage for comparing live data to prior state.
@@ -22,8 +22,8 @@ THREE.ViveController = function( id ){
 
 	//  Example use case:
 	//  window.addEventListener( 'viveControllerTriggerPressed', function( event ){
-	//	
-	//		console.log( 'vive controller trigger PRESSED!!!!!', event )
+	//  
+	//  	console.log( 'Vive controller', id, 'trigger was pressed.', event )
 	//  })
 
 	function dispatchViveControllerEvent( name, data ){
@@ -37,14 +37,16 @@ THREE.ViveController = function( id ){
 
 
 	//  Continuous polling...
-	//  Because this function has its own requestAnimationFrame() there’s no
-	//  need to call controller.update() in your own animation loop.
+	//  You will need to call this function from your main animation loop
+	//  and that main loop ought to use VRDisplay.requestAnimationFrame which
+	//  aims for 90fps -- rather than window.requestAnimationFrame which aims.
+	//  for 60fps. Thanks to Jaume Sanchez Elias (@thespite) and Brandon Jones 
+	//  (@Tojiro) for pointing this out!
 
 	function update(){
 
 		var gamepad, pose
 
-		requestAnimationFrame( update )
 		gamepad = navigator.getGamepads()[ id ]
 		if( gamepad !== undefined && gamepad.pose !== null ){
 
@@ -96,11 +98,6 @@ THREE.ViveController = function( id ){
 		}
 		else scope.visible = false
 	}
-
-
-	//  Kick it off, mate!
-
-	update()
 }
 THREE.ViveController.prototype = Object.create( THREE.Object3D.prototype )
 THREE.ViveController.prototype.constructor = THREE.ViveController
