@@ -23,16 +23,14 @@ THREE.ViveController = function( id ){
 	//  Example use case:
 	//  window.addEventListener( 'viveControllerTriggerPressed', function( event ){
 	//  
-	//  	console.log( 'Vive controller', id, 'trigger was pressed.', event )
+	//  	console.log( 'Vive controller', event.detail.id, 'trigger was PRESSED.', event )
 	//  })
 
 	function dispatchViveControllerEvent( name, data ){
 		
-		var event
-
-		if( data === undefined ) event = new CustomEvent( 'viveController'+ name )
-		else event = new CustomEvent( 'viveController'+ name, { detail: data })
-		window.dispatchEvent( event )
+		if( data === undefined ) data = {}
+		data.id = id
+		window.dispatchEvent( new CustomEvent( 'viveController'+ name, { detail: data }))
 	}
 
 
@@ -40,7 +38,7 @@ THREE.ViveController = function( id ){
 	//  You will need to call this function from your main animation loop
 	//  and that main loop ought to use VRDisplay.requestAnimationFrame which
 	//  aims for 90fps -- rather than window.requestAnimationFrame which aims.
-	//  for 60fps. Thanks to Jaume Sanchez Elias (@thespite) and Brandon Jones 
+	//  for 60fps. Thanks to Jaume Sanchez Elias (@TheSpite) and Brandon Jones 
 	//  (@Tojiro) for pointing this out!
 
 	this.update = function(){
@@ -74,26 +72,22 @@ THREE.ViveController = function( id ){
 			if( scope.thumbpadIsPressed !== gamepad.buttons[ 0 ].pressed ){
 
 				scope.thumbpadIsPressed = gamepad.buttons[ 0 ].pressed
-				if( scope.thumbpadIsPressed ) dispatchViveControllerEvent( 'ThumbpadPressed' )
-				else dispatchViveControllerEvent( 'ThumbpadReleased' )
+				dispatchViveControllerEvent( scope.thumbpadIsPressed ? 'ThumbpadPressed' : 'ThumbpadReleased' )
 			}
 			if( scope.triggerIsPressed !== gamepad.buttons[ 1 ].pressed ){
 
 				scope.triggerIsPressed = gamepad.buttons[ 1 ].pressed
-				if( scope.triggerIsPressed ) dispatchViveControllerEvent( 'TriggerPressed' )
-				else dispatchViveControllerEvent( 'TriggerReleased' )
+				dispatchViveControllerEvent( scope.triggerIsPressed ? 'TriggerPressed' : 'TriggerReleased' )
 			}
 			if( scope.gripsArePressed !== gamepad.buttons[ 2 ].pressed ){
 
 				scope.gripsArePressed = gamepad.buttons[ 2 ].pressed
-				if( scope.gripsArePressed ) dispatchViveControllerEvent( 'GripsPressed' )
-				else dispatchViveControllerEvent( 'GripsReleased' )
+				dispatchViveControllerEvent( scope.gripsArePressed ? 'GripsPressed' : 'GripsReleased' )
 			}
 			if( scope.menuIsPressed !== gamepad.buttons[ 3 ].pressed ){
 
 				scope.menuIsPressed = gamepad.buttons[ 3 ].pressed
-				if( scope.menuIsPressed ) dispatchViveControllerEvent( 'MenuPressed' )
-				else dispatchViveControllerEvent( 'MenuReleased' )
+				dispatchViveControllerEvent( scope.menuIsPressed ? 'MenuPressed' : 'MenuReleased' )
 			}
 		}
 		else scope.visible = false
