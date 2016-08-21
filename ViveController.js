@@ -74,26 +74,22 @@ THREE.ViveController = function( id ){
 			if( scope.thumbpadIsPressed !== gamepad.buttons[ 0 ].pressed ){
 
 				scope.thumbpadIsPressed = gamepad.buttons[ 0 ].pressed
-				if( scope.thumbpadIsPressed ) dispatchViveControllerEvent( 'ThumbpadPressed' )
-				else dispatchViveControllerEvent( 'ThumbpadReleased' )
+				dispatchViveControllerEvent( scope.thumbpadIsPressed ? 'ThumbpadPressed' : 'ThumbpadReleased' )
 			}
 			if( scope.triggerIsPressed !== gamepad.buttons[ 1 ].pressed ){
 
 				scope.triggerIsPressed = gamepad.buttons[ 1 ].pressed
-				if( scope.triggerIsPressed ) dispatchViveControllerEvent( 'TriggerPressed' )
-				else dispatchViveControllerEvent( 'TriggerReleased' )
+				dispatchViveControllerEvent( scope.triggerIsPressed ? 'TriggerPressed' : 'TriggerReleased' )
 			}
 			if( scope.gripsArePressed !== gamepad.buttons[ 2 ].pressed ){
 
 				scope.gripsArePressed = gamepad.buttons[ 2 ].pressed
-				if( scope.gripsArePressed ) dispatchViveControllerEvent( 'GripsPressed' )
-				else dispatchViveControllerEvent( 'GripsReleased' )
+				dispatchViveControllerEvent( scope.gripsArePressed ? 'GripsPressed' : 'GripsReleased' )
 			}
 			if( scope.menuIsPressed !== gamepad.buttons[ 3 ].pressed ){
 
 				scope.menuIsPressed = gamepad.buttons[ 3 ].pressed
-				if( scope.menuIsPressed ) dispatchViveControllerEvent( 'MenuPressed' )
-				else dispatchViveControllerEvent( 'MenuReleased' )
+				dispatchViveControllerEvent( scope.menuIsPressed ? 'MenuPressed' : 'MenuReleased' )
 			}
 		}
 		else scope.visible = false
