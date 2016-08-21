@@ -43,7 +43,7 @@ THREE.ViveController = function( id ){
 	//  for 60fps. Thanks to Jaume Sanchez Elias (@thespite) and Brandon Jones 
 	//  (@Tojiro) for pointing this out!
 
-	function update(){
+	this.update = function(){
 
 		var gamepad, pose
 
@@ -74,22 +74,26 @@ THREE.ViveController = function( id ){
 			if( scope.thumbpadIsPressed !== gamepad.buttons[ 0 ].pressed ){
 
 				scope.thumbpadIsPressed = gamepad.buttons[ 0 ].pressed
-				dispatchViveControllerEvent( scope.thumbpadIsPressed ? 'ThumbpadPressed' : 'ThumbpadReleased' )
+				if( scope.thumbpadIsPressed ) dispatchViveControllerEvent( 'ThumbpadPressed' )
+				else dispatchViveControllerEvent( 'ThumbpadReleased' )
 			}
 			if( scope.triggerIsPressed !== gamepad.buttons[ 1 ].pressed ){
 
 				scope.triggerIsPressed = gamepad.buttons[ 1 ].pressed
-				dispatchViveControllerEvent( scope.triggerIsPressed ? 'TriggerPressed' : 'TriggerReleased' )
+				if( scope.triggerIsPressed ) dispatchViveControllerEvent( 'TriggerPressed' )
+				else dispatchViveControllerEvent( 'TriggerReleased' )
 			}
 			if( scope.gripsArePressed !== gamepad.buttons[ 2 ].pressed ){
 
 				scope.gripsArePressed = gamepad.buttons[ 2 ].pressed
-				dispatchViveControllerEvent( scope.gripsArePressed ? 'GripsPressed' : 'GripsReleased' )
+				if( scope.gripsArePressed ) dispatchViveControllerEvent( 'GripsPressed' )
+				else dispatchViveControllerEvent( 'GripsReleased' )
 			}
 			if( scope.menuIsPressed !== gamepad.buttons[ 3 ].pressed ){
 
 				scope.menuIsPressed = gamepad.buttons[ 3 ].pressed
-				dispatchViveControllerEvent( scope.menuIsPressed ? 'MenuPressed' : 'MenuReleased' )
+				if( scope.menuIsPressed ) dispatchViveControllerEvent( 'MenuPressed' )
+				else dispatchViveControllerEvent( 'MenuReleased' )
 			}
 		}
 		else scope.visible = false
