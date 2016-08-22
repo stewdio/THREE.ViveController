@@ -1,8 +1,12 @@
 THREE.ViveController = function( id ){
 
-	var scope = this
-
 	THREE.Object3D.call( this )
+
+	var
+	gamepad, 
+	scope = this
+
+	this.getGamepad = function(){ return gamepad }
 	this.matrixAutoUpdate = false
 	this.standingMatrix   = new THREE.Matrix4()
 
@@ -30,6 +34,7 @@ THREE.ViveController = function( id ){
 		
 		if( data === undefined ) data = {}
 		data.id = id
+		data.gamepad = gamepad
 		window.dispatchEvent( new CustomEvent( 'viveController'+ name, { detail: data }))
 	}
 
@@ -43,7 +48,7 @@ THREE.ViveController = function( id ){
 
 	this.update = function(){
 
-		var gamepad, pose
+		var pose
 
 		gamepad = navigator.getGamepads()[ id ]
 		if( gamepad !== undefined && gamepad.pose !== null ){
